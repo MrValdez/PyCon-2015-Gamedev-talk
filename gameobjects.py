@@ -52,3 +52,8 @@ class Enemy(GameObject):
         self.velocity = [0, 0]
         self.components.append(component_Gravity)        
         self.components.append(component_Movement)        
+
+class Platform(GameObject):
+    def __init__(self, pos):
+        GameObject.__init__(self, 'RTS_Crate.png')
+        self.pos = pos

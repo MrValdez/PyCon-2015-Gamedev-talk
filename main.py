@@ -20,6 +20,7 @@ GameObjects = []
 player1 = gameobjects.Hero()
 GameObjects.append(player1)
 GameObjects.append(gameobjects.Enemy())
+GameObjects.append(gameobjects.Platform([0, 400]))
 
 stage1 = GameState()
 
