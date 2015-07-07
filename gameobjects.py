@@ -72,6 +72,26 @@ class Hero(GameObject):
             self.pos[1] = box2.top - box1.height
             self.velocity[1] = 0
 
+        # uncomment to see this different behaviors
+
+        # Notice that we are stuck because we are inside the platform's collision area.
+#        elif box1.right <= box2.left:
+#            self.pos[0] = box2.left - box1.width
+#            self.velocity[0] = 0
+#            print("collision")
+
+        # The final position for the player is different from the platform's collision area
+#        elif box1.right <= box2.left:
+#            self.pos[0] = box2.left - box1.width - 10
+#            self.velocity[0] = 0
+#            print("collision")
+
+        # correct behavior.
+        elif box1.right >= box2.left:
+            self.pos[0] = box2.left - box1.width
+            self.velocity[0] = 0
+            print("collision")
+
     def draw(self, surface):
         GameObject.draw(self, surface)
         
