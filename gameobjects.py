@@ -7,6 +7,16 @@ def component_Movement(GameObject, GameState):
     GameObject.pos[0] += GameObject.velocity[0]
     GameObject.pos[1] += GameObject.velocity[1]
 
+    # added max speed
+    if GameObject.velocity[0] < -3:
+        GameObject.velocity[0] = -3
+        
+    if GameObject.velocity[0] > 3:
+        GameObject.velocity[0] = 3
+
+def component_AI(GameObject, GameState):
+    GameObject.velocity[0] -= 0.1
+
 def component_Collidable(GameObject, GameState):
     for target in GameState.GameObjects:
         if target == GameObject:
@@ -78,6 +88,7 @@ class Enemy(GameObject):
         self.components.append(component_Gravity)        
         self.components.append(component_Movement)        
         self.components.append(component_Collidable)        
+        self.components.append(component_AI)        
 
 class Platform(GameObject):
     def __init__(self, pos):
