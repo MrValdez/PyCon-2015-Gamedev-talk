@@ -19,7 +19,7 @@ def component_Collidable(GameObject, GameState):
         box2 = box2.move(target.pos)
 
         if box1.colliderect(box2):
-            print("collision")
+            GameObject.event_collide(target)
 
 class GameObject:
     def __init__(self, image):
@@ -58,7 +58,8 @@ class Hero(GameObject):
             
         GameObject.update(self, GameState)
         
-        
+    def event_collide(self, target):
+        print("Hero has collided")
             
 class Enemy(GameObject):
     def __init__(self):
