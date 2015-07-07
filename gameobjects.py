@@ -71,6 +71,17 @@ class Hero(GameObject):
         if box1.bottom <= box2.top:
             self.pos[1] = box2.top - box1.height
             self.velocity[1] = 0
+
+    def draw(self, surface):
+        GameObject.draw(self, surface)
+        
+        # debug so we can see the collision boxes
+        Debug = True
+        if Debug:
+            box1 = self.image.get_rect()
+            box1 = box1.move(self.pos)
+            
+            pygame.draw.rect(surface, [255, 0, 0], box1, 1)
             
 class Enemy(GameObject):
     def __init__(self):
@@ -84,3 +95,17 @@ class Platform(GameObject):
     def __init__(self, pos):
         GameObject.__init__(self, 'RTS_Crate.png')
         self.pos = pos
+
+    def draw(self, surface):
+        GameObject.draw(self, surface)
+        
+        # debug so we can see the collision boxes
+        Debug = True
+        if Debug:
+            box2 = self.image.get_rect()
+            box2 = box2.move(self.pos)
+                        
+            padding = 10
+            box2 = box2.inflate(-padding, -padding)
+                
+            pygame.draw.rect(surface, [255, 0, 0], box2, 10)
