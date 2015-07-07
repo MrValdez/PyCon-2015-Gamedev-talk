@@ -96,6 +96,26 @@ class Enemy(GameObject):
         self.velocity = [0, 0]
         self.components.append(component_Gravity)        
         self.components.append(component_Movement)        
+        self.components.append(component_Collidable)        
+
+    def event_collide(self, target):
+        box1 = self.image.get_rect()
+        box1 = box1.move(self.pos)
+        box2 = target.image.get_rect()
+        box2 = box2.move(target.pos)
+                        
+        padding = 10
+        box2 = box2.inflate(-padding, -padding)
+                
+        if box1.bottom <= box2.top:
+            self.pos[1] = box2.top - box1.height
+            self.velocity[1] = 0
+        elif box1.right > box2.left and box1.right < box2.right:
+            self.pos[0] = box2.left - box1.width
+            self.velocity[0] = 0
+        elif box1.left < box2.right and box1.left > box2.left:
+            self.pos[0] = box2.right
+            self.velocity[0] = 0
 
 class Platform(GameObject):
     def __init__(self, pos):
