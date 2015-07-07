@@ -64,22 +64,8 @@ class Hero(GameObject):
         box1 = box1.move(self.pos)
         box2 = target.image.get_rect()
         box2 = box2.move(target.pos)
-                
-        # In games, the collision between objects inside the engine is different from the sprite on screen.
-        # This is to lower frustration on 'pixel-perfect' collision. Example:
-        #   1. The fireball on-screen hits the player. With pixel-perfect collision, the fireball will collide
-        #      with the player as soon as it touches the collision box. If we lower the fireball's collision
-        #      box, the player will have a feeling of "I almost got hit. I'm so lucky it didn't"
-        #   2. For platforms, it is possible for a player to fall through the platforms or to walk through
-        #      walls if their velocity is high enough. Ways to prevent this is to:
-        #           a. add a velocity limit
-        #           b. move the platform's collision box by the object's velocity
-        #           c. make the platform's collision box smaller or larger 
-        #              (depending on how the designer wants the game object to interact)
-        # For this game, we choose 2.c., but the other methods can also be used. It depends entirely on the 
-        # game and testing.
-        
-        padding = 10        # try playing with the numbers
+                        
+        padding = 10
         box2 = box2.inflate(-padding, -padding)
                 
         if box1.bottom <= box2.top:

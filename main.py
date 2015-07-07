@@ -20,6 +20,8 @@ class GameState:
         GameObjects.append(player1)
         GameObjects.append(gameobjects.Enemy())
         GameObjects.append(gameobjects.Platform([0, 400]))
+        GameObjects.append(gameobjects.Platform([100, 400]))
+        GameObjects.append(gameobjects.Platform([200, 400]))
         
         self.GameObjects = GameObjects
         
