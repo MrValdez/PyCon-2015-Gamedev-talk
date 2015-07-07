@@ -22,6 +22,7 @@ class GameState:
         GameObjects.append(gameobjects.Platform([0, 400]))
         GameObjects.append(gameobjects.Platform([100, 400]))
         GameObjects.append(gameobjects.Platform([200, 400]))
+        GameObjects.append(gameobjects.Platform([300, 300]))
         
         self.GameObjects = GameObjects
         
