@@ -17,12 +17,12 @@ class GameState:
         GameObjects = []
 
         player1 = gameobjects.Hero()
-        GameObjects.append(player1)
-        GameObjects.append(gameobjects.Enemy())
         GameObjects.append(gameobjects.Platform([0, 400]))
         GameObjects.append(gameobjects.Platform([100, 400]))
         GameObjects.append(gameobjects.Platform([200, 400]))
         GameObjects.append(gameobjects.Platform([300, 300]))
+        GameObjects.append(gameobjects.Enemy())
+        GameObjects.append(player1)
         
         self.GameObjects = GameObjects
         
