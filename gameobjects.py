@@ -1,11 +1,16 @@
 import pygame
 
-def component_Gravity(GameObject):
+def component_Gravity(GameObject, GameState):
     GameObject.velocity[1] += 0.1
 
-def component_Movement(GameObject):
+def component_Movement(GameObject, GameState):
     GameObject.pos[0] += GameObject.velocity[0]
     GameObject.pos[1] += GameObject.velocity[1]
+
+def component_Collision(GameObject, GameState):
+    for GO in GameState.GameObjects:
+        box1 = GameObject.image.get_rect()
+        box2 = GO.image.get_rect()
 
 class GameObject:
     def __init__(self, image):
@@ -20,7 +25,7 @@ class GameObject:
 
     def update(self, GameState):
         for component in self.components:
-            component(self)
+            component(self, GameState)
         
     def draw(self, surface):
         surface.blit(self.image, self.pos)
@@ -31,6 +36,7 @@ class Hero(GameObject):
         self.velocity = [0, 0]
         self.components.append(component_Gravity)        
         self.components.append(component_Movement)        
+        self.components.append(component_Collision)        
         
     def update(self, GameState):
         keystate = pygame.key.get_pressed()
