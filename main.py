@@ -13,14 +13,23 @@ class GameState:
     def __init__(self):
         #self.joystick = pygame.joystick.Joystick(0)
         #self.joystick.init()
-        pass
-        
-GameObjects = []
 
-player1 = gameobjects.Hero()
-GameObjects.append(player1)
-GameObjects.append(gameobjects.Enemy())
-GameObjects.append(gameobjects.Platform([0, 400]))
+        GameObjects = []
+
+        player1 = gameobjects.Hero()
+        GameObjects.append(player1)
+        GameObjects.append(gameobjects.Enemy())
+        GameObjects.append(gameobjects.Platform([0, 400]))
+        
+        self.GameObjects = GameObjects
+        
+    def update(self):
+        for GO in self.GameObjects:
+            GO.update(stage1)
+    
+    def draw(self, surface):
+        for GO in self.GameObjects:
+            GO.draw(surface)    
 
 stage1 = GameState()
 
@@ -34,13 +43,10 @@ while True:
 
     keystate = pygame.key.get_pressed()
     if keystate[pygame.K_ESCAPE]:
-        pygame.quit()
-
-    for GO in GameObjects:
-        GO.update(stage1)
+        pygame.quit()        
         
-    for GO in GameObjects:
-        GO.draw(surface)    
+    stage1.update()
+    stage1.draw(surface)
         
     pygame.display.update()
     clock.tick(60)
