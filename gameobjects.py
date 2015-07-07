@@ -19,7 +19,20 @@ def component_Collidable(GameObject, GameState):
         box2 = box2.move(target.pos)
 
         if box1.colliderect(box2):
-            GameObject.event_collide(target)
+            
+            # there are other ways of checking if the game object is looking for collision events. this is the simpliest.
+            # other methods include
+            #  a. having the component function create a default collision event that should be overriden.
+            #  b. creating a messaging system that contains both GameObject and target. Have the GameObject check the 
+            #     messaging system and act.
+            if 'event_collide' in dir(GameObject):          
+            
+                # In some games, it might make sense to have target.event_collide(GameObject).
+                # The decision on which to use should be done as early as possible. Once you've made the decision, don't
+                # change order in the middle of development - you'll introduce subtle bugs.
+                # To see the difference between the two ordering, I suggest you make two prototype games with both options
+                # The only way to grasp this concept is to experiment.
+                GameObject.event_collide(target)
 
 class GameObject:
     def __init__(self, image):
