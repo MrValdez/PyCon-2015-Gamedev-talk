@@ -19,19 +19,7 @@ def component_Collidable(GameObject, GameState):
         box2 = box2.move(target.pos)
 
         if box1.colliderect(box2):
-            
-            # there are other ways of checking if the game object is looking for collision events. this is the simpliest.
-            # other methods include
-            #  a. having the component function create a default collision event that should be overriden.
-            #  b. creating a messaging system that contains both GameObject and target. Have the GameObject check the 
-            #     messaging system and act.
-            if 'event_collide' in dir(GameObject):          
-            
-                # In some games, it might make sense to have target.event_collide(GameObject).
-                # The decision on which to use should be done as early as possible. Once you've made the decision, don't
-                # change order in the middle of development - you'll introduce subtle bugs.
-                # To see the difference between the two ordering, I suggest you make two prototype games with both options
-                # The only way to grasp this concept is to experiment.
+            if 'event_collide' in dir(GameObject):
                 GameObject.event_collide(target)
 
 class GameObject:
@@ -72,7 +60,31 @@ class Hero(GameObject):
         GameObject.update(self, GameState)
         
     def event_collide(self, target):
-        print("Hero has collided")
+        box1 = self.image.get_rect()
+        box1 = box1.move(self.pos)
+        box2 = target.image.get_rect()
+        box2 = box2.move(target.pos)
+                
+        # In games, the collision between objects inside the engine is different from the sprite on screen.
+        # This is to lower frustration on 'pixel-perfect' collision. Example:
+        #   1. The fireball on-screen hits the player. With pixel-perfect collision, the fireball will collide
+        #      with the player as soon as it touches the collision box. If we lower the fireball's collision
+        #      box, the player will have a feeling of "I almost got hit. I'm so lucky it didn't"
+        #   2. For platforms, it is possible for a player to fall through the platforms or to walk through
+        #      walls if their velocity is high enough. Ways to prevent this is to:
+        #           a. add a velocity limit
+        #           b. move the platform's collision box by the object's velocity
+        #           c. make the platform's collision box smaller or larger 
+        #              (depending on how the designer wants the game object to interact)
+        # For this game, we choose 2.c., but the other methods can also be used. It depends entirely on the 
+        # game and testing.
+        
+        padding = 10        # try playing with the numbers
+        box2 = box2.inflate(-padding, -padding)
+                
+        if box1.bottom <= box2.top:
+            self.pos[1] = box2.top - box1.height
+            self.velocity[1] = 0
             
 class Enemy(GameObject):
     def __init__(self):
