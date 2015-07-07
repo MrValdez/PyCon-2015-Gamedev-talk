@@ -17,10 +17,12 @@ class GameState:
         GameObjects = []
 
         player1 = gameobjects.Hero()
-        GameObjects.append(gameobjects.Platform([0, 400]))
+        player1.pos = [110, 0]
         GameObjects.append(gameobjects.Platform([100, 400]))
         GameObjects.append(gameobjects.Platform([200, 400]))
-        GameObjects.append(gameobjects.Platform([300, 300]))
+        GameObjects.append(gameobjects.Platform([300, 400]))
+        GameObjects.append(gameobjects.Platform([400, 300]))
+        GameObjects.append(gameobjects.Platform([0, 300]))
         GameObjects.append(gameobjects.Enemy())
         GameObjects.append(player1)
         
