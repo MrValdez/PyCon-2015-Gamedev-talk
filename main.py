@@ -22,6 +22,8 @@ class GameState:
         GameObjects.append(gameobjects.Platform([200, 400]))
         GameObjects.append(gameobjects.Platform([300, 400]))
         GameObjects.append(gameobjects.Platform([400, 300]))
+        GameObjects.append(gameobjects.Platform([500, 300]))
+        GameObjects.append(gameobjects.Platform([600, 300]))
         GameObjects.append(gameobjects.Platform([0, 300]))
         GameObjects.append(gameobjects.Enemy())
         GameObjects.append(player1)
