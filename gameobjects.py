@@ -27,7 +27,7 @@ def component_Collidable(GameObject, GameState):
         box1 = box1.move(GameObject.pos)
         box2 = target.image.get_rect()
         box2 = box2.move(target.pos)
-
+        
         if box1.colliderect(box2):
             if 'event_collide' in dir(target):
                 target.event_collide(GameObject)
@@ -57,7 +57,9 @@ class Hero(GameObject):
         self.components.append(component_Gravity)        
         self.components.append(component_Movement)        
         self.components.append(component_Collidable)        
-        
+
+        # You can move the jumping code to a component, to make the code cleaner
+        self.isJumping = False
         self.maxJumpPower = 5
         self.jumpPower = self.maxJumpPower
         
@@ -73,23 +75,21 @@ class Hero(GameObject):
             self.velocity[0] += 1 / 4
         if keystate[pygame.K_SPACE]:
             if self.jumpPower > 0:
-                self.velocity[1] -= 0.1     # jumping should negate gravity. There are better ways to do this though (your new assignment!).
+                self.velocity[1] -= 0.1
                 
                 if self.jumpPower == self.maxJumpPower:
-                    # give a large initial jump velocity. This is to negate the "pull" from the collision detection.
-                    # Note that if event_collide is in Hero, we could simply disable collision detection when the
-                    # jump button is pushed.
+                    self.isJumping = True
                     self.velocity[1] = -7
-                else:
+                elif self.jumpPower > 0:
                     self.velocity[1] -= 0.2
                     
             self.jumpPower -= 1
             
     def draw(self, surface):
         GameObject.draw(self, surface)
-        
+
         # debug so we can see the collision boxes
-        Debug = False
+        Debug = True
         if Debug:
             box1 = self.image.get_rect()
             box1 = box1.move(self.pos)
@@ -129,6 +129,12 @@ class Platform(GameObject):
             pygame.draw.rect(surface, [255, 0, 0], box2, 10)
 
     def event_collide(self, target):
+        if 'isJumping' in dir(target):
+            # ignore collisions with the platform on the first frame of jumping
+            if target.isJumping:
+                target.isJumping = False
+                return
+    
         box1 = target.image.get_rect()
         box1 = box1.move(target.pos)
         box2 = self.image.get_rect()
@@ -137,7 +143,11 @@ class Platform(GameObject):
         padding = 10
         box2 = box2.inflate(-padding, -padding)
                 
-        if box1.bottom <= box2.top:
+        # another fix to the character passing through the platform is by checking
+        # against the bottom. notice the bug that this fix causes. There are ways
+        # to get perfect collision, but I'll leave that as your homework        
+        
+        if box1.bottom <= box2.bottom:
             target.pos[1] = box2.top - box1.height
             target.velocity[1] = 0
         elif box1.right > box2.left and box1.right < box2.right:
