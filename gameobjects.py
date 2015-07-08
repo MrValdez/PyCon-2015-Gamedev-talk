@@ -89,7 +89,7 @@ class Hero(GameObject):
         GameObject.draw(self, surface)
 
         # debug so we can see the collision boxes
-        Debug = True
+        Debug = False
         if Debug:
             box1 = self.image.get_rect()
             box1 = box1.move(self.pos)
