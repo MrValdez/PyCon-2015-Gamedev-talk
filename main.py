@@ -41,10 +41,10 @@ class GameState:
         
     def update(self):
         # starting from the top, uncomment each line to see the effect of each camera_pos style
-        #self.camera_pos = [self.player1.pos[0], self.player1.pos[1]]
-        #self.camera_pos = [self.player1.pos[0], 0]
-        #self.camera_pos = [-self.player1.pos[0], 0]
-        #self.camera_pos = [-self.player1.pos[0] + 100, 0]
+        self.camera_pos = [self.player1.pos[0], self.player1.pos[1]]
+        self.camera_pos = [self.player1.pos[0], 0]
+        self.camera_pos = [-self.player1.pos[0], 0]
+        self.camera_pos = [-self.player1.pos[0] + 100, 0]
         
         for GO in self.GameObjects:
             GO.update(stage1)
