@@ -58,7 +58,12 @@ class Hero(GameObject):
         self.components.append(component_Movement)        
         self.components.append(component_Collidable)        
         
+        self.maxJumpPower = 5
+        self.jumpPower = self.maxJumpPower
+        
     def update(self, GameState):
+        GameObject.update(self, GameState)
+        
         keystate = pygame.key.get_pressed()
         #if GameState.joystick.get_axis(0) < -0.2:
         if keystate[pygame.K_LEFT]:
@@ -66,9 +71,20 @@ class Hero(GameObject):
         #if GameState.joystick.get_axis(0) > 0.2:
         if keystate[pygame.K_RIGHT]:
             self.velocity[0] += 1 / 4
+        if keystate[pygame.K_SPACE]:
+            if self.jumpPower > 0:
+                self.velocity[1] -= 0.1     # jumping should negate gravity. There are better ways to do this though (your new assignment!).
+                
+                if self.jumpPower == self.maxJumpPower:
+                    # give a large initial jump velocity. This is to negate the "pull" from the collision detection.
+                    # Note that if event_collide is in Hero, we could simply disable collision detection when the
+                    # jump button is pushed.
+                    self.velocity[1] = -7
+                else:
+                    self.velocity[1] -= 0.2
+                    
+            self.jumpPower -= 1
             
-        GameObject.update(self, GameState)
-
     def draw(self, surface):
         GameObject.draw(self, surface)
         
@@ -80,6 +96,9 @@ class Hero(GameObject):
             
             pygame.draw.rect(surface, [255, 0, 0], box1, 1)
             
+    def event_collide(self, target):
+        self.jumpPower = self.maxJumpPower
+    
 class Enemy(GameObject):
     def __init__(self):
         GameObject.__init__(self, 'moongoose.png')
