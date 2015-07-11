@@ -13,6 +13,7 @@ But feel free to clone, fork, and make changes. I am looking forward to seeing y
 
 
 Suggestions:
-1. There is a Snake Charmer image in here. Add that as a character.
-2. Add a game feature
-3. Fix the bugs
+
+1. There is a Snake Charmer image in here. Add that as a character.  
+2. Add a game feature  
+3. Fix the bugs  
